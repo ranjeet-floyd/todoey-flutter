@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:todoey/models/task.dart';
+import 'package:todoey/models/task_data.dart';
 import 'package:todoey/screens/add_task_screen.dart';
 import 'package:todoey/widgets/tasks_list.dart';
+import 'package:provider/provider.dart';
 
 class TaskScreen extends StatefulWidget {
   @override
@@ -9,8 +10,8 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  final List<Task> _tasks = [];
-  TasksList _tasksList;
+//  final List<Task> _tasks = [];
+//  TasksList _tasksList;
 
   @override
   Widget build(BuildContext context) {
@@ -27,23 +28,10 @@ class _TaskScreenState extends State<TaskScreen> {
             isScrollControlled: true,
             context: context,
             builder: (context) => SingleChildScrollView(
-              child: AddTaskScreen(
-                onTaskAddPressed: (textValue) {
-                  print('Add more task : $textValue');
-                  _tasks.add(Task(name: textValue, isDone: false));
-                  print('tasks : $_tasks');
-                  setState(() {
-                    _tasksList = TasksList(
-                      tasks: _tasks,
-                    );
-                  });
-                  Navigator.pop(context);
-                },
-              ),
+              child: AddTaskScreen(),
               padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
             ),
           );
-          // TODO: implement add press
         },
       ),
       body: Column(
@@ -83,7 +71,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   height: 5,
                 ),
                 Text(
-                  ' ${_tasks.length.toString()} Tasks ',
+                  ' ${Provider.of<TaskData>(context).taskCount} Tasks ',
                   style: TextStyle(color: Colors.white),
                 ),
               ],
@@ -101,7 +89,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   topRight: Radius.circular(30),
                 ),
               ),
-              child: _tasksList,
+              child: TasksList(),
             ),
           ),
         ],
