@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:todoey/widgets/task_alert_dialog.dart';
 
 class TasksTile extends StatelessWidget {
   final bool checkBoxChecked;
-  final Function(bool) onChanged;
+  final Function onChanged;
   final String taskText;
+  final Function onLongPress;
 
-  TasksTile({this.checkBoxChecked, this.onChanged, this.taskText});
+  TasksTile({this.checkBoxChecked, this.onChanged, this.taskText, this.onLongPress});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,7 @@ class TasksTile extends StatelessWidget {
         value: checkBoxChecked,
         onChanged: onChanged,
       ),
+      onLongPress: onLongPress,
     );
   }
 }
